@@ -116,7 +116,7 @@
 	};
 
 	function getReadableCoins(coins) {
-		return (parseInt(coins || 0) / lastStats.config.coinUnits).toFixed(lastStats.config.coinUnits.toString().length - 1);
+		return (parseInt(coins || 0) / lastStats.config.denominationUnit).toFixed(lastStats.config.denominationUnit.toString().length - 1);
 	}
 
 	function getReadableHashRateString(hashrate) {
