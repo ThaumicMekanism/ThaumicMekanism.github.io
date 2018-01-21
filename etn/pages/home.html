@@ -99,19 +99,115 @@
         <div><i class="fa fa-tachometer"></i> Hash Rate: <span id="poolHashrate"></span></div>
         <div><i class="fa fa-clock-o"></i> Block Found: <span id="poolLastBlockFound"></span></div>
         <div><i class="fa fa-users"></i> Connected Miners: <span id="poolMiners"></span></div>
-        <div><i class="fa fa-gift"></i> Donations: <span id="poolDonations"></span></div>
+        <div id="donations"><i class="fa fa-gift"></i> Donations: <span id="poolDonations"></span></div>
         <div><i class="fa fa-money"></i> Total Pool Fee: <span id="poolFee"></span></div>
         <div><i class="fa fa-history"></i> Block Found Every: <span id="blockSolvedTime"></span> (est.)</div>
     </div>
 
-    <div class="col-md-4 stats">
+    <div class="col-md-4 stats marketRate">
         <h3 id="marketHeader">Market</h3>
         <div class="marketFooter">Updated: <span id="marketLastUpdated"></span></div>
         <div class="marketFooter">Powered by <a href="https://www.cryptonator.com/">Cryptonator</a></div>
     </div>
 </div>
 
-<hr>
+<!-- <hr> -->
+
+<div class="row chartsPoolStat">
+    <div class="col-sm-2 chartWrap">
+        <h4>Hash/USD <span data-toggle="tooltip" data-placement="top" data-original-title="Reward * Rate / Difficulty"><i class="fa fa-question-circle"></i></span></h4>
+        <div id="chartHashUsd" data-chart="profit">
+            <div class="chart"></div>
+            <!-- <p class="text-center" id="cur_profit">-</p> -->
+        </div>
+    </div>
+    <div class="col-sm-20 chartWrap">
+        <h4>Price in USD</h4>
+        <div id="chartPriceUsd" data-chart="price">
+            <div class="chart"></div>
+            <!-- <p class="text-center" id="cur_price">-</p> -->
+        </div>
+    </div>
+    <div class="col-sm-20 chartWrap">
+        <h4>Difficulty</h4>
+        <div id="chartDifficulty" data-chart="diff">
+            <div class="chart"></div>
+            <!-- <p class="text-center" id="cur_diff">-</p> -->
+        </div>
+    </div>
+    <div class="col-sm-20 chartWrap">
+        <h4>Hashrate</h4>
+        <div id="chartHashrate" data-chart="hashrate">
+            <div class="chart"></div>
+            <!-- <p class="text-center" id="cur_hashrate">-</p> -->
+        </div>        
+    </div>
+    <div class="col-sm-20 chartWrap">        
+        <h4>Workers</h4>
+        <div id="chartWorkers" data-chart="workers">
+            <div class="chart"></div>
+            <!-- <p class="text-center" id="cur_workers">-</p> -->
+        </div> 
+    </div>    
+
+    <script>
+        var currencyGraphStat = {
+            type: 'line',
+            width: '100%',
+            height: '75',
+            lineColor: '#03a678',
+            fillColor: 'rgba(3, 166, 120, .3)',
+            spotColor: null,
+            minSpotColor: null,
+            maxSpotColor: null,
+            highlightLineColor: '#236d26',
+            spotRadius: 3,        
+            chartRangeMin: 0,
+            drawNormalOnTop: false,
+            tooltipFormat: '<b>{{y}}</b>, {{offset:names}}'
+        };
+
+        var userGraphStat = {
+	        hashrate: {
+		        type: 'line',
+		        width: '100%',
+		        height: '180',
+		        lineColor: '#03a678',
+		        fillColor: 'rgba(3, 166, 120, .3)',
+		        spotColor: null,
+		        minSpotColor: null,
+		        maxSpotColor: null,
+		        highlightLineColor: '#236d26',
+		        spotRadius: 3,
+		        drawNormalOnTop: false,
+		        chartRangeMin: 0,
+		        tooltipFormat: '<b>{{y}}</b>, {{offset:names}}'
+	        },
+	        payments: {
+		        type: 'line',
+		        width: '100%',
+		        height: '180',
+		        lineColor: '#03a678',
+		        fillColor: 'rgba(3, 166, 120, .3)',
+		        spotColor: null,
+		        minSpotColor: null,
+		        maxSpotColor: null,
+		        highlightLineColor: '#236d26',
+		        spotRadius: 3,
+		        drawNormalOnTop: false,
+		        chartRangeMin: 0,
+		        tooltipFormat: '<b>{{y}}</b>, {{offset:names}}'
+	        }
+        };
+
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+</div>
+
+<!-- <hr> -->
 
 <div id="miningProfitCalc">
     <h3>Estimate Mining Profits</h3>
@@ -147,13 +243,34 @@
         </button></span>
     </div>
 
-    <div id="addressError"></div>
-    <div class="yourStats"><i class="fa fa-key"></i> Address: <span id="yourAddressDisplay"></span></div>
-    <div class="yourStats"><i class="fa fa-bank"></i> Pending Balance: <span id="yourPendingBalance"></span></div>
-    <div class="yourStats"><i class="fa fa-money"></i> Total Paid: <span id="yourPaid"></span></div>
-    <div class="yourStats"><i class="fa fa-clock-o"></i> Last Share Submitted: <span id="yourLastShare"></span></div>
-    <div class="yourStats"><i class="fa fa-tachometer"></i> Hash Rate: <span id="yourHashrateHolder"></span></div>
-    <div class="yourStats"><i class="fa fa-cloud-upload"></i> Total Hashes Submitted: <span id="yourHashes"></span></div>
+    <div class="row">
+        <div class="col-sm-4 stats">
+            <div id="addressError"></div>
+            <!-- <div class="yourStats"><i class="fa fa-key"></i> Address: <span id="yourAddressDisplay"></span></div> -->
+            <div class="yourStats"><i class="fa fa-bank"></i> Pending Balance: <span id="yourPendingBalance"></span></div>
+            <div class="yourStats"><i class="fa fa-money"></i> Total Paid: <span id="yourPaid"></span></div>
+            <div class="yourStats"><i class="fa fa-clock-o"></i> Last Share Submitted: <span id="yourLastShare"></span></div>
+            <div class="yourStats"><i class="fa fa-tachometer"></i> Hash Rate: <span id="yourHashrateHolder"></span></div>
+            <div class="yourStats"><i class="fa fa-cloud-upload"></i> Total Hashes Submitted: <span id="yourHashes"></span></div>
+        </div>
+        <div class="col-sm-4">            
+            <div class="userChart" data-chart="user_hashrate">
+                <h4>Hash Rate</h4>
+                <div class="chart">
+                    
+                </div>                
+            </div>
+        </div> 
+        <div class="col-sm-4">
+            <div class="userChart" data-chart="user_payments">
+                <h4>Payments</h4>
+                <div class="chart">
+                    
+                </div> 
+            </div>
+        </div>       
+    </div>
+    
 
     <br class="yourStats">
 
@@ -197,13 +314,11 @@
 
             $('#networkLastBlockFound').timeago('update', new Date(lastStats.network.timestamp * 1000).toISOString());
 
-            updateText('networkHashrate', getReadableHashRateString(lastStats.network.difficulty / 120) + '/sec');
+            updateText('networkHashrate', getReadableHashRateString(lastStats.network.difficulty / lastStats.config.coinDifficultyTarget) + '/sec');
             updateText('networkDifficulty', lastStats.network.difficulty.toString());
             updateText('blockchainHeight', lastStats.network.height.toString());
             updateText('networkLastReward', getReadableCoins(lastStats.network.reward, 4));
-            updateText('lastHash', lastStats.network.hash.substr(0, 13) + '...').setAttribute('href',
-                blockchainExplorer + lastStats.network.hash
-            );
+            updateText('lastHash', lastStats.network.hash.substr(0, 13) + '...').setAttribute('href', getBlockchainUrl(lastStats.network.hash));
 
             updateText('poolHashrate', getReadableHashRateString(lastStats.pool.hashrate) + '/sec');
 
@@ -219,19 +334,19 @@
 
 
             var totalFee = lastStats.config.fee;
-            if (lastStats.config.doDonations){
-                totalFee += lastStats.config.donation;
-                totalFee += lastStats.config.coreDonation;
-                var feeText = [];
-                if (lastStats.config.donation > 0) feeText.push(lastStats.config.donation + '% to pool dev');
-                if (lastStats.config.coreDonation > 0) feeText.push(lastStats.config.coreDonation + '% to core devs');
-                updateText('poolDonations', feeText.join(', '));
+            if (Object.keys(lastStats.config.donation).length) {
+                var totalDonation = 0;
+                for(var i in lastStats.config.donation) {
+                    totalDonation += lastStats.config.donation[i];
+                }
+                totalFee += totalDonation;
+                updateText('poolDonations', floatToString(totalDonation) + '% to open-source devs');
             }
             else{
-                updateText('poolDonations', '');
+                $('#donations').hide()
             }
 
-            updateText('poolFee', totalFee + '%');
+            updateText('poolFee', floatToString(totalFee) + '%');
 
 
             updateText('blockSolvedTime', getReadableTime(lastStats.network.difficulty / lastStats.pool.hashrate));
@@ -243,7 +358,6 @@
 
 
     $('#networkLastBlockFound,#poolLastBlockFound,#yourLastShare,#marketLastUpdated').timeago();
-
 
     function getReadableTime(seconds){
 
@@ -267,8 +381,8 @@
     function getReadableHashRateString(hashrate){
         var i = 0;
         var byteUnits = [' H', ' KH', ' MH', ' GH', ' TH', ' PH' ];
-        while (hashrate > 1000){
-            hashrate = hashrate / 1000;
+        while (hashrate > 1024){
+            hashrate = hashrate / 1024;
             i++;
         }
         return hashrate.toFixed(2) + byteUnits[i];
@@ -287,7 +401,13 @@
         var marketsData = [];
         for (var i = 0; i < cryptonatorWidget.length; i++){
             (function(i){
-                xhrMarketGets[cryptonatorWidget[i]] = $.get('https://api.cryptonator.com/api/ticker/' + cryptonatorWidget[i], function(data){
+            	cryptonatorWidget[i] = cryptonatorWidget[i].replace('{symbol}', lastStats.config.symbol.toLowerCase());
+                xhrMarketGets[cryptonatorWidget[i]] = $.get('https://www.cryptonator.com/api/ticker/' + cryptonatorWidget[i], function(data){
+                    if(data.error) {
+                        return;
+                    }
+                    $('.marketRate').show();
+
                     marketsData[i] = data;
                     completedFetches++;
                     if (completedFetches !== cryptonatorWidget.length) return;
@@ -324,11 +444,11 @@
 
     function calcEstimateProfit(){
         try {
-            var rateUnit = Math.pow(1000,parseInt($('#calcHashUnit').data('mul')));
-            var inp2 = parseFloat($('#calcHashRate').val()) * rateUnit;
-            var resl = ( lastStats.network.reward / coinUnits) / ((lastStats.network.difficulty / inp2) / 86400  );
-            if (!isNaN(resl)) {
-                updateText('calcHashAmount', (Math.round(resl * 100) / 100).toString());
+            var rateUnit = Math.pow(1024,parseInt($('#calcHashUnit').data('mul')));
+            var hashRate = parseFloat($('#calcHashRate').val()) * rateUnit;
+            var profit = (hashRate * 86400 / lastStats.network.difficulty) * lastStats.network.reward;
+            if (profit) {
+                updateText('calcHashAmount', getReadableCoins(profit, 2, true));
                 return;
             }
         }
@@ -380,13 +500,13 @@
                 },
                 dataType: 'json',
                 cache: 'false',
-                success: function(data){
+                success: function(data){                    
 
                     $('#lookUp > span:last-child').hide();
                     $('#lookUp > span:first-child').show();
 
                     if (!data.stats){
-                        $('.yourStats').hide();
+                        $('.yourStats, .userChart').hide();
                         $('#addressError').text(data.error).show();
 
                         if (addressTimeout) clearTimeout(addressTimeout);
@@ -399,7 +519,6 @@
 
 
                     $('#addressError').hide();
-                    updateText('yourAddressDisplay', address);
 
                     if (data.stats.lastShare)
                         $('#yourLastShare').timeago('update', new Date(parseInt(data.stats.lastShare) * 1000).toISOString());
@@ -413,29 +532,54 @@
 
                     renderPayments(data.payments);
 
-                    $('.yourStats').show();
+                    $('.yourStats').show(function(){
+                        xhrRenderUserCharts = $.ajax({
+                            url: api + '/stats_address?address=' + address + '&longpoll=false',            
+                            cache: false,
+                            dataType: 'json',            
+                            success: function(data) {
+                                createUserCharts(data);                                
+                            }
+                        });
+                    });
+                    
+                    
 
                     docCookies.setItem('mining_address', address, Infinity);
 
                     fetchAddressStats(true);
-
+                    
                 },
                 error: function(e){
                     if (e.statusText === 'abort') return;
-                    $('#lookUp').html(lookupBtnHtml);
                     $('#addressError').text('Connection error').show();
 
                     if (addressTimeout) clearTimeout(addressTimeout);
                     addressTimeout = setTimeout(function(){
                         fetchAddressStats(false);
                     }, 2000);
+                    
                 }
             });
         }
         fetchAddressStats(false);
     });
+    
+    var urlWalletAddress = location.search.split('wallet=')[1] || 0;
 
-    var address = docCookies.getItem('mining_address');
+    var address = urlWalletAddress || docCookies.getItem('mining_address');
+
+    var xhrRenderUserCharts;
+
+    function createUserCharts(data) {
+	    for(var chart in userGraphStat) {
+		    if(data['charts'][chart] && data['charts'][chart].length) {
+			    var graphData = getGraphData(data['charts'][chart], chart == 'payments');
+			    userGraphStat[chart].tooltipValueLookups = {names: graphData.names};
+			    $('[data-chart=user_' + chart + ']').show().find('.chart').sparkline(graphData.values, userGraphStat[chart]);
+		    }
+	    }
+    }
 
     if (address){
         $('#yourStatsInput').val(address);
@@ -463,5 +607,102 @@
             }
         });
     });
+
+
+
+    /* Show stats of the currency */
+
+    function getGraphData (rawData, fixValueToCoins) {
+        var graphData = {
+            names: [],
+            values: []
+        };
+        if(rawData) {
+            for (var i = 0, xy; xy = rawData[i]; i++) {
+                graphData.names.push(new Date(xy[0]*1000).toUTCString());
+                graphData.values.push(fixValueToCoins ? getReadableCoins(xy[1], 4, true) : xy[1]);
+            }
+        }        
+       
+        
+        return graphData;
+    }
+
+    function createCharts(data) {         
+        if (data.hasOwnProperty("charts")) {
+    	    var graphData = {
+    		    profit: getGraphData(data.charts.profit),
+    		    diff: getGraphData(data.charts.difficulty),
+    		    hashrate: getGraphData(data.charts.hashrate),
+    		    price: getGraphData(data.charts.price),
+    		    workers: getGraphData(data.charts.workers)
+    	    };
+            
+    	    for(var graphType in graphData) {
+    		    if(graphData[graphType].values.length > 1) {
+                    var settings = jQuery.extend({}, currencyGraphStat);
+                    settings.tooltipValueLookups = {names: graphData[graphType].names};
+			        var $chart = $('[data-chart=' + graphType + '] .chart');
+			        $chart.closest('.chartWrap').show();
+			        $chart.sparkline(graphData[graphType].values, settings);
+    		    }
+    	    }
+        }
+    }
+
+    function loadStatistics () {        
+        $.get(api + '/stats', function (stats) {
+            if (stats) {
+                showStats(stats)
+            }
+        });      
+    }
+
+    function showStats (stats) {
+        $('#cur_diff').text(stats.network.difficulty);
+        $('#cur_hashrate').text(getReadableHashRateString(stats.pool.hashrate) + '/s');
+        $('#cur_workers').text(stats.pool.miners);        
+
+        // Some values aren't available in stats.
+        // Get the values from charts data.
+        
+        if (stats.hasOwnProperty('charts')) {
+            var priceData = stats.charts.price;
+            $('#cur_price').text(priceData ? priceData[priceData.length-1][1] : '---'); 
+        }
+        if (stats.hasOwnProperty('charts')) {
+            var profitValue;
+            var profitData = stats.charts.profit;
+
+            if (profitData) {
+                profitValue = profitData[profitData.length-1][1];
+                if (profitValue) {
+                    profitValue = profitValue.toPrecision(3).toString().replace(/(.*?)e(\+|\-)(\d+)/, '$1<sup>10<sup>$2$3</sup></sup>');
+                }
+                else {
+                    profitValue = '---';
+                }
+            }
+            else {
+                profitValue = '---';
+            }
+            $('#cur_profit').html(profitValue);           
+       }
+    }
+
+
+
+    
+    var xhrRenderCharts;
+
+    $(function(){
+        xhrRenderCharts = $.ajax({
+            url: api + '/stats',
+            cache: false,            
+            success: createCharts
+        });               
+    });
+
+
 
 </script>

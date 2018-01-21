@@ -5,14 +5,16 @@ var coinDecimalPlaces = 2;
 
 var poolHost = "18.221.149.215";
 
-var irc = "irc.freenode.net/#monero-pools";
+var irc = "irc.freenode.net/#poolhost";
 
-var email = "support@electroneum.com";
+var email = "support@poolhost.com";
 
-var cryptonatorWidget = ["ETN-BTC", "ETN-USD", "ETN-EUR", "ETN-GBP"];
+var cryptonatorWidget = ["{symbol}-BTC", "{symbol}-USD", "{symbol}-EUR"];
 
 var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
 
-var blockchainExplorer = "https://blockexplorer.electroneum.com/block/";
+var blockchainExplorer = "http://chainradar.com/{symbol}/block/{id}";
 
-var transactionExplorer = "https://blockexplorer.electroneum.com/tx/";
+var transactionExplorer = "http://chainradar.com/{symbol}/transaction/{id}";
+
+var themeCss = "themes/default-theme.css";
