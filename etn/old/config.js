@@ -9,8 +9,6 @@ var irc = "irc.freenode.net/#monero-pools";
 
 var email = "support@electroneum.com";
 
-var cryptonatorWidget = ["ETN-BTC", "ETN-USD", "ETN-EUR", "ETN-GBP"];
-
 var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
 
 var blockchainExplorer = "https://blockexplorer.electroneum.com/block/";
