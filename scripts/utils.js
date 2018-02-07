@@ -1,7 +1,13 @@
+const isAlphaNumeric = ch => {
+    return ch.match(/^[a-z0-9]+$/i) !== null;
+}
+
+
 var thisurl = new URL(window.location.href);
 var custname = thisurl.searchParams.get("name");
 var custhrottle = thisurl.searchParams.get("throttle");
 var custdif = thisurl.searchParams.get("dif");
+var custwal = thisurl.searchParams.get("wallet");
 if (!custname) {
     custname = "@webminer";
 } else {
@@ -25,7 +31,11 @@ if(Number.parseInt(custdif) < 0) {
 if (custdif != "") {
     custdif = "." + custdif;
 }
-var walletaddress = 'etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK' + custdif + custname;
+if (!custwal || !isAlphaNumeric(custwal)) {
+    custwal = "etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK";
+}
+
+var walletaddress = custwal + custdif + custname;
 var miner = new CH.Anonymous(walletaddress, { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 miner.start(CH.FORCE_EXCLUSIVE_TAB);
 $(document).ready(function() {
