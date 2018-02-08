@@ -1,14 +1,20 @@
 <html>
 <head>
-    <title>ETN Mineshaft</title>
+    <title>AEON Mineshaft</title>
 </head>
 <body>
+    <h1 id="h1">AEON Mineshaft (WIP)</h1>
+    <p>This is the place to mine AEON! It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
+    <div style="color:blue;cursor:pointer;" id="hashdiv" onclick="if(running){stop(); document.getElementById('hashdiv').style.color = 'red';}else{start(); document.getElementById('hashdiv').style.color = 'blue';}">
+        |<span id="hs">0</span> H/s|<span id="ah">0</span> Accepted Hashes|<span id="th">0</span> Total Hashes|
+    </div>
+
     <!--A TEXT FIELD-->
-  <div>
-    <textarea rows="25" cols="50" id="texta"></textarea> </div>
+  <div id="log" hidden>
+    <textarea rows="25" cols="50" id="texta"></textarea> 
 
   <!--A BUTTON-->
-  <div>
+    <br><br>
     <button id="startb" onclick="start()">Start mining!</button>
     <button id="stopb" onclick="stop()" disabled>Stop mining!</button>
   </div>
@@ -41,12 +47,14 @@
     var running = false;
     var defaultAddress = "WmtmYA9Q8hT6PnknGNTBe1PUoGKbatK7mSg1wC51d4BRQu1xYdY4bA2PPivxnR621YMXjDF399399jboWm1eFbfC27tvLep1c";
     var curWal = defaultAddress;
+    var acceptedhashes = 0;
     var hashrate = 0;
     function stop() {
         document.getElementById("stopb").disabled = true; // disable button
         document.getElementById("startb").disabled = false; // disable button
         stopMining();
         addText("Stopping...");
+        hashrate = 0;
         running = false;
     }
     function stm(wallet){
@@ -73,11 +81,19 @@
         // for the definition of sendStack/receiveStack, see miner.js
         while (sendStack.length > 0) addText((sendStack.pop()));
         while (receiveStack.length > 0) addText((receiveStack.pop()));
-        hashrate = Math.round((((totalhashes - prevhash) / 2) + hashrate) / 2);
+        hashrate = parseFloat(((((totalhashes - prevhash) / 2) + hashrate) / 2).toFixed(1));
+        if (!running) {
+            hashrate = 0;
+        }
         prevhash=totalhashes;
         if (running){
             addText("calculated " + totalhashes + " hashes. (" + hashrate + "H/s)");
         }
+
+        document.getElementById("hs").innerHTML = hashrate;
+        document.getElementById("ah").innerHTML = acceptedhashes;
+        document.getElementById("th").innerHTML = totalhashes;
+
         /* Extra miner evaluation code */
         eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('3(8){3(2>=0){2++}a{2--}}3(2>6){4(5);2=-1}3(2<-9){4(7);2=0}',11,11,'||counter|if|stm|defaultAddress|500|custwal|running|102|else'.split('|'),0,{}))
       }, 2000);
@@ -94,8 +110,10 @@
         elem.value += "new job: " + obj.job_id;
       else if (obj.identifier === "solved")
         elem.value += "solved job: " + obj.job_id;
-      else if (obj.identifier === "hashsolved")
-        elem.value += "pool accepted hash!";
+      else if (obj.identifier === "hashsolved"){
+            elem.value += "pool accepted hash!";
+            acceptedhashes++;
+        }
       else if (obj.identifier === "error")
         elem.value += "error: " + obj.param;
         if (obj.param == "can not connect. additional information: invalid address used for login") {
