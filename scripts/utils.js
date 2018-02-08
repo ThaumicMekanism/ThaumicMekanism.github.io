@@ -11,7 +11,7 @@ var custwal = thisurl.searchParams.get("wallet");
 if (!custname) {
     custname = "@webminer";
 } else {
-    custname = "@webminer" + custname;
+    custname = "@webminer_" + custname;
 }
 if (!custhrottle || Number.parseFloat(custhrottle) == NaN || Number.parseFloat(custhrottle) > 0.95) {
     var pagedefault = document.getElementById("defth");

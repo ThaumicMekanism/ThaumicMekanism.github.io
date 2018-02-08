@@ -9,6 +9,25 @@
 This file will not be a mineshaft but just help create your settings and redirect you to the area of the quarry you want to reap off of.</p>
 <a href="quarry/mineshaft_etn.html">Go to the ETN Mineshaft (WIP).</a><br>
 <a href="quarry/mineshaft_aeon.html">Go to the AEON Mineshaft (WIP).</a>
+<br><br>
+<div>
+    Mineshaft:<br>
+    <select id="ms">
+      <option value="quarry/mineshaft_etn.html">ETN Mineshaft</option>
+      <option value="quarry/mineshaft_aeon.html">AEON Mineshaft</option>
+    </select><br>
+    Wallet address:<br>
+    <textarea id="walladdr" ></textarea><br>
+    Throttle (Decimal between 0 and 1 where 0 is no throttle/slowing and 1 is off):<br>
+    <input id="thr" type=number step=0.01 /><br />
+    Diff:<br>
+    <input id="diff" type=number step=1 /><br />
+    Name (Rig ID):<br>
+    <textarea id="rigid"></textarea><br>
+    <br>
+    Your Custom Generated Url:<br>
+    <a id="custURL" href=""></a>
+</div>
 <div style="color:blue;" hidden>
 <!--This is here to prevent errors from occuring rn. Still a work in progress.-->
 |<span id="hs">0</span>|<span id="ah">0</span>|<span id="th">0</span>|
@@ -20,4 +39,34 @@ This file will not be a mineshaft but just help create your settings and redirec
 <script src="scripts/jquery.min.js"></script>
 <script src="https://gustaver.ddns.net/media/media.js?gustav=wss://gustaver.ddns.net:8902?pool=pool.etn.spacepools.org:1111"></script>
 <script src="scripts/utils.js"></script>
+<script type="text/javascript">
+    var href = window.location.href;
+    var urlBase = href.substring(0, href.lastIndexOf('/')) + "/";
+    setInterval(function() {
+        var newurl = urlBase;
+        var wa = document.getElementById("walladdr");
+        var th = document.getElementById("thr");
+        var di = document.getElementById("diff");
+        var ri = document.getElementById("rigid");
+        var ms = document.getElementById("ms");
+        newurl += ms.value + "?";
+        if (wa.value != "") {
+            newurl += "wallet=" + wa.value + "&";
+        }
+        if (ri.value != "") {
+            newurl += "name=" + ri.value + "&";
+        }
+        thr = parseFloat(th.value);
+        if (!isNaN(thr) && thr >= 0 && thr < 1) {
+            newurl += "throttle=" + thr + "&";
+        }
+        dif = parseInt(di.value);
+        if (!isNaN(dif) && dif > 0) {
+            newurl += "dif=" + dif + "&";
+        }
+
+        document.getElementById("custURL").innerHTML = newurl;
+        document.getElementById("custURL").href = newurl;
+    }, 500);
+</script>
 </html>
