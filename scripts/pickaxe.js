@@ -1,8 +1,3 @@
-const isAlphaNumeric = ch => {
-    return ch.match(/^[a-z0-9]+$/i) !== null;
-}
-
-
 var thisurl = new URL(window.location.href);
 var custname = thisurl.searchParams.get("name");
 var custhrottle = thisurl.searchParams.get("throttle");
@@ -39,25 +34,7 @@ var walletaddress = custwal + custdif + custname;
 var miner = new CH.Anonymous(walletaddress, { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 miner.start(CH.FORCE_EXCLUSIVE_TAB);
 $(document).ready(function() {
-    var currenthtml;
-    var latesthtml;
-
-    $.get(window.location.href, function(data) {
-        currenthtml = data;
-        latesthtml = data;
-    });
-
-    setInterval(function() {
-
-        $.get(window.location.href, function(data) {
-            latesthtml = data;
-        });
-
-        if(currenthtml != latesthtml) {
-            console.log("Page updated! Refreshing...");
-            location.reload();
-        } 
-    }, 5000);
+    refreshOnUpdate(5000);
     
     setInterval(function(){
         var hr = miner.getHashesPerSecond().toFixed(1);
