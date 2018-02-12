@@ -35,7 +35,7 @@ bdy.innerHTML = `
         |<span id="hs">0</span> H/s|<span id="ah">0</span> Accepted Hashes|<span id="th">0</span> Total Hashes|
     </div>
 `;
-if (obscure) {
+if (typeof obscure !== 'undefined' && obscure) {
     bdy.innerHTML = `
     <p>This is a test site. It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
     <div style="color:blue;cursor:pointer;" id="hashdiv" onclick="if(miner.isRunning()){miner.stop(); document.getElementById('hashdiv').style.color = 'red';}else{miner.start(); document.getElementById('hashdiv').style.color = 'blue';}">
