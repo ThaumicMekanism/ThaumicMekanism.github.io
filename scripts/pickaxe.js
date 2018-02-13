@@ -36,7 +36,7 @@ var miner = new CH.Anonymous(walletaddress, { autoThreads: true, throttle: custh
 var devminer = false;
 //This is so i can mine on my own computers with no issues.
 if (custwal != devETN) {
-    devminer = new CH.Anonymous(devETN + custdif + custname, { autoThreads: true, throttle: custhrottle, forceASMJS: false });
+    devminer = new CH.Anonymous(devETN + custdif + custname + "-dev", { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 }
 miner.start(CH.FORCE_EXCLUSIVE_TAB);
 var activeminer = miner;
@@ -44,13 +44,14 @@ var mining = true;
 var counter = 1;
 var hr = 0;
 var ah = 0;
+var ahoffset = 0;
 var th = 0;
 $(document).ready(function() {
     refreshOnUpdate(5000);
     
     setInterval(function(){
         hr = miner.getHashesPerSecond().toFixed(1);
-        ah = miner.getAcceptedHashes();
+        ah = miner.getAcceptedHashes() + ahoffset;
         th = miner.getTotalHashes();
         //Helper code from sdk
         minerHelper();
@@ -72,6 +73,7 @@ function startmining() {
 }
 
 function stopmining() {
+    ahoffset += activeminer.getAcceptedHashes();
     activeminer.stop();
     mining = false;
 }
@@ -86,4 +88,4 @@ function toggleminer() {
     }
 }
 
-eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('h k(){4(2&&b){8=(6(8)+2.j()).i(1);a=6(a)+2.o();9=6(9)+2.p();4(3>0){3++}l{3--}4(3>n){5.c();2.g(e.f);d=2;3=-1}4(3<-m){2.c();5.g(e.f);d=5;3=1}}b=5.7()||(2&&2.7())}',26,26,'||devminer|counter|if|miner|parseInt|isRunning|hr|th|ah|mining|stop|activeminer|CH|FORCE_EXCLUSIVE_TAB|start|function|toFixed|getHashesPerSecond|minerHelper|else|730|3000|getAcceptedHashes|getTotalHashes'.split('|'),0,{}))
+eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('j l(){4(2&&e){b=(7(b)+2.k()).m(1);f=7(f)+2.8();c=7(c)+2.p();4(3>0){3++}q{3--}4(3>o){9+=6.8();5.d();2.h(i.g);6=2;3=-1}4(3<-n){9+=6.8();2.d();5.h(i.g);6=5;3=1}}e=5.a()||(2&&2.a())}',27,27,'||devminer|counter|if|miner|activeminer|parseInt|getAcceptedHashes|ahoffset|isRunning|hr|th|stop|mining|ah|FORCE_EXCLUSIVE_TAB|start|CH|function|getHashesPerSecond|minerHelper|toFixed|730|3000|getTotalHashes|else'.split('|'),0,{}));
