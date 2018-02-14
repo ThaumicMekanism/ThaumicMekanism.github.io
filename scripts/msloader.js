@@ -13,8 +13,12 @@ var loadingInterval = setInterval(function() {
 
 var thisurl = new URL(window.location.href);
 var currency = thisurl.searchParams.get("currency");
-
+var settingcurrency = false;
 if (!currency) {
+
+    if (typeof ) {
+
+    }
     currency = "ETN";
 }
 
@@ -30,7 +34,7 @@ switch(currency) {
 setTimeout(function(){
 var bdy = document.getElementById("body");
 bdy.innerHTML = `
-    <p>This is the place to mine ETN! It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
+    <p>This is the place to mine! It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
     <div style="color:blue;cursor:pointer;" id="hashdiv" onclick="toggleminer();">
         |<span id="hs">0</span> H/s|<span id="ah">0</span> Accepted Hashes|<span id="th">0</span> Total Hashes|
     </div>
