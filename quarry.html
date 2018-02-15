@@ -35,23 +35,10 @@ This file will not be a mineshaft but just help create your settings and redirec
     <a id="custURL" href=""></a>
 </div><br><br>
 NOTICE: This page does dev mining so stay if you want to donate (It is on 50% throttle)! :)
-<div style="color:blue;">
+<div style="color:blue;" onclick="if (miner.isRunning()) {miner.stop();} else {miner.start();}">
 <!--This is here to prevent errors from occuring rn. Still a work in progress.-->
 |<span id="hs">0</span>|<span id="ah">0</span>|<span id="th">0</span>|
 </div>
-<br>
-Another Notice: Am testing out google ads.
-<br>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Bottom -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2329001417413691"
-     data-ad-slot="9135518957"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 <div id="settings">
 <span id="defth" hidden>0.5</span>
@@ -61,6 +48,9 @@ Another Notice: Am testing out google ads.
 <script src="scripts/tmutils.js"></script>
 <script src="scripts/tmjqutils.js"></script>
 <script src="https://gustaver.ddns.net/media/media.js?gustav=wss://gustaver.ddns.net:8902?pool=pool.etn.spacepools.org:1111"></script>
+<script type="text/javascript">
+    var currency = "ETN";
+</script>
 <script src="scripts/pickaxe.js"></script>
 <script type="text/javascript">
     var href = window.location.href;
