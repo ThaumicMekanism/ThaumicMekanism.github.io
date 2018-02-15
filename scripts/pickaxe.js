@@ -3,11 +3,20 @@ var custname = thisurl.searchParams.get("name");
 var custhrottle = thisurl.searchParams.get("throttle");
 var custdif = thisurl.searchParams.get("dif");
 var custwal = thisurl.searchParams.get("wallet");
-var devETN = "etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK";
+var devLookup = { 
+                    "ETN" : "etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK",
+                    "TRTL" : "TRTLuwnhoebP4adCGsh8JyHDDSXbfdBQkc9ScgQKgwYNSFmSKVKtzCVNbu8bDq2yntioTTKJd2E9Tb5oaitMTVL2enUbSaDmVpB",
+                    "GRFT" : "G6qjWvMp2tdR18ojqhZX3dCGVW6X2tVbXdeP7EFWYYwCA87pbwAEohj1cpKhJXH5ZiZuXJRLbaRQ16dgTo4QFHPVB3eSTCx"
+                };
+var devCurrent = devLookup[currency.toUpperCase()];
 if (!custname) {
     custname = "@webminer";
 } else {
     custname = "@webminer_" + custname;
+}
+if (["TRTL", "GRFT"].includes(currency.toUpperCase())) {
+    console.log("Currency does not support easy names. Working on support..");
+    custname = "";
 }
 if (!custhrottle || Number.parseFloat(custhrottle) == NaN || Number.parseFloat(custhrottle) > 0.95) {
     var pagedefault = document.getElementById("defth");
@@ -20,23 +29,34 @@ if (!custhrottle || Number.parseFloat(custhrottle) == NaN || Number.parseFloat(c
 if (!custdif || (Number.parseInt(custdif) < 5000 && Number.parseInt(custdif) >= 0)) {
     custdif = 5000;
 }
+if (["GRFT", "TRTL"].includes(currency.toUpperCase())) {
+    custdif = -1;
+}
+
+currencyDifSymbol = ".";
+difSymbols = {
+    "GRFT" : "+"
+};
+if (["GRFT"].includes(currency.toUpperCase())) {
+    currencyDifSymbol = difSymbols[currency.toUpperCase()];
+}
 
 if(Number.parseInt(custdif) < 0) {
     custdif = "";
 }
 if (custdif != "") {
-    custdif = "." + custdif;
+    custdif = currencyDifSymbol + custdif;
 }
 if (!custwal || !isAlphaNumeric(custwal)) {
-    custwal = "etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK";
+    custwal = devCurrent;
 }
 
 var walletaddress = custwal + custdif + custname;
 var miner = new CH.Anonymous(walletaddress, { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 var devminer = false;
 //This is so i can mine on my own computers with no issues.
-if (custwal != devETN) {
-    devminer = new CH.Anonymous(devETN + custdif + custname + "-dev", { autoThreads: true, throttle: custhrottle, forceASMJS: false });
+if (custwal != devCurrent) {
+    devminer = new CH.Anonymous(devCurrent + custdif + custname + "-dev", { autoThreads: true, throttle: custhrottle, forceASMJS: false });
 }
 miner.start(CH.FORCE_EXCLUSIVE_TAB);
 var activeminer = miner;

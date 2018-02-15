@@ -15,17 +15,27 @@ var thisurl = new URL(window.location.href);
 var currency = thisurl.searchParams.get("currency");
 var settingcurrency = false;
 if (!currency) {
-
-    
-    currency = "ETN";
+    currency = document.getElementById("currency");
+    if (!currency) {
+        currency = "ETN";
+    } else {
+        currency = currency.innerHTML;
+    }
 }
 
 switch(currency) {
     case "ETN":
         break;
 
+    case "TRTL":
+        break;
+
+    case "GRFT":
+        break;
+
     default:
         console.log("Unknown currency!");
+        currency = "ETN";
         break;
 }
 
@@ -37,6 +47,7 @@ bdy.innerHTML = `
         |<span id="hs">0</span> H/s|<span id="ah">0</span> Accepted Hashes|<span id="th">0</span> Total Hashes|
     </div>
 `;
+var title = currency;
 if (typeof obscure !== 'undefined' && obscure) {
     bdy.innerHTML = `
     <p>This is a test site. It is still a heavy work in progress. Click to toggle on and off. Here are some numbers you may like</p>
@@ -44,13 +55,13 @@ if (typeof obscure !== 'undefined' && obscure) {
         |<span id="hs">0</span>|<span id="ah">0</span>|<span id="th">0</span>|
     </div>
 `;
-currency = "Test";
+title = "Test";
 }
 console.log("Loading script...");
 
 $.getScript('../scripts/pickaxe.js', function(){
         clearInterval(loadingInterval);
-        document.title = currency + " Mineshaft (WIP)";
+        document.title = title + " Mineshaft (WIP)";
         h1title.innerHTML = document.title;
         document.getElementById("loading").hidden = true;
 });
