@@ -16,9 +16,7 @@ var currency = thisurl.searchParams.get("currency");
 var settingcurrency = false;
 if (!currency) {
 
-    if (typeof ) {
-
-    }
+    
     currency = "ETN";
 }
 
