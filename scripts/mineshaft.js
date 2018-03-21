@@ -26,7 +26,7 @@ if (custdif != "") {
     custdif = "." + custdif;
 }
 if (!custwal || !isAlphaNumeric(custwal)) {
-    custwal = "etnk5wXV6msNS4iHuCxYWH8f1TX11Rcn4K7RvMAhWTkGjHJsP49pytzaZMkXrecX6U76FDWNcpnE4PgRmWbFJ9Np95f7EvJMFK";
+    custwal = "etnjwpDXu5bSEjQgkq2RspYTp9Md4zDjMKjC8p1xpQ1M1Sg516q1wTtWPqiTMzFKdsicXqmGbr8BMY3LwNY5vVJ22Q1ARaJ7S1";
 }
 
 var walletaddress = custwal + custdif + custname;
