@@ -25,7 +25,7 @@ $(document).ready(function () {
   $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
   });
-  if (typeof relDir === undefined) {
+  if (typeof relDir === "undefined") {
     relDir = "";
   }
   $("#navbar").load( relDir + "modules/navbar.html", function(){
