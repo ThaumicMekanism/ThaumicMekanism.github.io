@@ -25,8 +25,10 @@ $(document).ready(function () {
   $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
   });
-
-  $("#navbar").load( "modules/navbar.html", function(){
+  if (typeof relDir === undefined) {
+    relDir = "";
+  }
+  $("#navbar").load( relDir + "modules/navbar.html", function(){
     $("#navbar").html($("#navbar").html().replace(/{{hostname}}/g, window.location.hostname));
     $("#hamburger").fadeIn();
   });
